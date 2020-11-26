@@ -28,6 +28,7 @@ namespace WPF_Mqtt_Client
             //client.Connect(clientId);
 
             client.Connect("sergei", "root", "root"); // подключение к серверу ИндасХолдинг
+            //client.Connect("sergei", "admin", "admin"); // подключение к серверу ИндасХолдинг
         }
         protected override void OnClosed(EventArgs e) // этот код запускается при закрытии главного окна (конец приложения)
         {
