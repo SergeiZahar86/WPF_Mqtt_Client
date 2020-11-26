@@ -17,10 +17,14 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="txtReceived" Background="#FF7BB97B" FontSize="20"/>
-        <TextBox x:Name="txtTopicSubscribe" Grid.Column="1" Grid.Row="0" Background="Bisque" FontSize="20"/>
-        <TextBox x:Name="txtTopicPublish" Grid.Column="2" Grid.Row="0" Background="DarkKhaki" FontSize="20"/>
-        <TextBox x:Name="txtPublish" Grid.Column="0" Grid.Row="1" Background="LightBlue" FontSize="20"/>
+        <TextBox x:Name="txtReceived" Background="#FF7BB97B" FontSize="20"
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtTopicSubscribe" Grid.Column="1" Grid.Row="0" Background="Bisque" FontSize="20"
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtTopicPublish" Grid.Column="2" Grid.Row="0" Background="DarkKhaki" FontSize="20"
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtPublish" Grid.Column="0" Grid.Row="1" Background="LightBlue" FontSize="20"
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button Click="btnPublish_Click" Grid.Column="1" Grid.Row="1" Content="Опубликовать"
                 FontSize="20" Background="#FF6CB6A5"/>
         <Button Click="btnSubscribe_Click" Grid.Column="2" Grid.Row="1" Content="Подписаться"
