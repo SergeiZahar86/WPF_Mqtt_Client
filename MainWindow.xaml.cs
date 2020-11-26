@@ -17,8 +17,8 @@ namespace WPF_Mqtt_Client
             //string BrokerAddress = "broker.hivemq.com"; // https://www.hivemq.com/public-mqtt-broker/  удалённый сервер
             //client = new MqttClient(BrokerAddress);
 
-            client = new MqttClient("10.90.101.1", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг
-
+            //client = new MqttClient("10.90.101.1", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг
+            client = new MqttClient("10.90.90.5", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг
 
             // зарегистрируйте callback-функцию (мы должны реализовать, см. ниже), которая вызывается библиотекой при получении сообщения
             client.MqttMsgPublishReceived += client_MqttMsgPublishReceived; // этот код запускается при получении сообщения
@@ -27,7 +27,7 @@ namespace WPF_Mqtt_Client
             //clientId = Guid.NewGuid().ToString();
             //client.Connect(clientId);
 
-            client.Connect("sergei", "admin", "admin"); // подключение к серверу ИндасХолдинг
+            client.Connect("sergei", "root", "root"); // подключение к серверу ИндасХолдинг
         }
         protected override void OnClosed(EventArgs e) // этот код запускается при закрытии главного окна (конец приложения)
         {
@@ -37,7 +37,8 @@ namespace WPF_Mqtt_Client
         }
         private void btnSubscribe_Click(object sender, RoutedEventArgs e) // этот код запускается при нажатии кнопки «Подписаться»
         {
-            string Topic = "hello";
+            string Topic = "/write/tls/#";
+            //string Topic = "hello";
             client.Subscribe(new string[] { Topic }, new byte[] { 2 });   
             txtReceived.Text = "";
             /*
@@ -78,8 +79,15 @@ namespace WPF_Mqtt_Client
         void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e) // этот код запускается при получении сообщения
         {
             string ReceivedMessage = Encoding.UTF8.GetString(e.Message);
-            Dispatcher.Invoke(delegate {txtReceived.Text = ReceivedMessage;}); // нам нужна эта конструкция, потому что код приема
-                                                                               //в библиотеке и пользовательский интерфейс с текстовым полем выполняются в разных потоках
+            //Dispatcher.Invoke(delegate { txtReceived.Text = ReceivedMessage; }); // нам нужна эта конструкция,
+            //потому что код приема в библиотеке и пользовательский интерфейс с текстовым полем выполняются в разных потоках
+
+
+            //byte b2 = (byte)BitConverter.ToChar(e.Message, 1);
+            byte b1 = e.Message[0];
+            byte b2 = e.Message[1];
+            Dispatcher.Invoke(delegate {txtReceived.Text = b1.ToString()+b2.ToString();}); 
+                                                                               
         }
     }
 }
