@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_Mqtt_Client", "WPF_Mqtt_Client.csproj", "{03945FBB-13EF-41DF-BE3A-73FDA1413074}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03945FBB-13EF-41DF-BE3A-73FDA1413074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03945FBB-13EF-41DF-BE3A-73FDA1413074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03945FBB-13EF-41DF-BE3A-73FDA1413074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03945FBB-13EF-41DF-BE3A-73FDA1413074}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {080545D8-6323-46F1-B7B3-38F7442C3F75}
+	EndGlobalSection
+EndGlobal
