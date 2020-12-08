@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows;
 using uPLibrary.Networking.M2Mqtt;
@@ -17,8 +18,8 @@ namespace WPF_Mqtt_Client
             //string BrokerAddress = "broker.hivemq.com"; // https://www.hivemq.com/public-mqtt-broker/  удалённый сервер
             //client = new MqttClient(BrokerAddress);
 
-            //client = new MqttClient("10.90.101.1", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг
-            client = new MqttClient("10.90.90.5", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг
+            client = new MqttClient("10.90.101.1", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
+            //client = new MqttClient("10.90.90.5", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг
 
             // зарегистрируйте callback-функцию (мы должны реализовать, см. ниже), которая вызывается библиотекой при получении сообщения
             client.MqttMsgPublishReceived += client_MqttMsgPublishReceived; // этот код запускается при получении сообщения
@@ -27,8 +28,8 @@ namespace WPF_Mqtt_Client
             //clientId = Guid.NewGuid().ToString();
             //client.Connect(clientId);
 
-            client.Connect("sergei", "root", "root"); // подключение к серверу ИндасХолдинг
-            //client.Connect("sergei", "admin", "admin"); // подключение к серверу ИндасХолдинг
+            //client.Connect("sergei", "root", "root"); // подключение к серверу ИндасХолдинг
+            client.Connect("sergei", "admin", "admin"); // подключение к серверу ИндасХолдинг у Коли
         }
         protected override void OnClosed(EventArgs e) // этот код запускается при закрытии главного окна (конец приложения)
         {
@@ -60,9 +61,14 @@ namespace WPF_Mqtt_Client
         }
         private void btnPublish_Click(object sender, RoutedEventArgs e) // этот код запускается при нажатии кнопки "Опубликовать"
         {
-            string Topic = "hello";
-            client.Publish(Topic, Encoding.UTF8.GetBytes(txtPublish.Text), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true);
+            //string Topic = "/write/tls";
+            string Topic = "/test/write/tls";
+            //client.Publish(Topic, Encoding.UTF8.GetBytes(txtPublish.Text), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true);
 
+            MemoryStream ms = new MemoryStream();
+            ms.Write(BitConverter.GetBytes((short)0),0,2);
+            ms.ToArray();
+            client.Publish(Topic, ms.ToArray(), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true);
             /*
             if (txtTopicPublish.Text != "")
             {
@@ -87,7 +93,29 @@ namespace WPF_Mqtt_Client
             //byte b2 = (byte)BitConverter.ToChar(e.Message, 1);
             byte b1 = e.Message[0];
             byte b2 = e.Message[1];
-            Dispatcher.Invoke(delegate {txtReceived.Text = b1.ToString()+b2.ToString();}); 
+            int b = 0b01010000;
+
+            switch (b1)
+            {
+                case 0b01010000:
+                    Dispatcher.Invoke(delegate { txtReceived.Text = "Начало погрузки"; });
+                    break;
+                case 0b01100000:
+                    Dispatcher.Invoke(delegate { txtReceived.Text = "Окончание погрузки"; });
+                    break;
+                case 0b10010000:
+                    Dispatcher.Invoke(delegate { txtReceived.Text = "Начало взвешивания"; });
+                    break;
+                case 0b10100000:
+                    Dispatcher.Invoke(delegate { txtReceived.Text = "Окончание взвешивания"; });
+                    break;
+            }
+
+
+            /*if ((b1 & b) == b) {
+                Dispatcher.Invoke(delegate { txtReceived.Text = b.ToString() + "  "+ b1.ToString(); });
+            }*/
+            //Dispatcher.Invoke(delegate {txtReceived.Text = b1.ToString()+b2.ToString();}); 
                                                                                
         }
     }
